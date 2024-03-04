@@ -1,15 +1,16 @@
 # import libraries
 import pandas as pd
 import glob
+import numpy as np
 
 # define folder directory to look in. Change to xlsx if Excel file.
 path = r'/Users/hoanganhle/Desktop/Trial'
 allFiles = glob.glob(path + "/*.csv")
 
-# sort the list of files based on file names
-allFiles.sort()
+# sort the list of files based on numeric values in filenames
+allFiles.sort(key=lambda x: int(''.join(filter(str.isdigit, x))))
 
-# make a list of all the files in the folder and append the files according to the order of their file names
+# make a list of all the files in the folder
 list_ = []
 for file_ in allFiles:
     # define sheet name and place data starts
