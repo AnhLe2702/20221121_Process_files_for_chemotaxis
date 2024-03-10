@@ -1,0 +1,21 @@
+# import libraries
+import pandas as pd
+import glob
+
+# define folder directory to look in. Change to xlsx if Excel file.
+path = r'/Users/hoanganhle/Desktop/Trial'
+allFiles = glob.glob(path + "/*.csv")
+
+# Loop through each CSV file
+for file in allFiles:
+    # Read the CSV file
+    data = pd.read_csv(file)
+    
+    # Delete the last row tail(1) (n=1) for each group of data defined by the TID column
+    data_modified = data.drop(data.groupby(['TID']).tail(1).index, axis=0)
+    
+    # Get the file name (without the path and extension)
+    file_name = file.split("/")[-1].split(".")[0]
+    
+    # Save the modified file with a new name
+    data_modified.to_csv(f'/Users/hoanganhle/Desktop/Trial/{file_name}_Delete_n_1.csv', index=False)
